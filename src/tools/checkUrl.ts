@@ -1,19 +1,19 @@
 import axios from 'axios';
-import { Request } from './urls';
+import { URLRequest } from './UrlRequest';
 
-export const checkUrl = async (request: Request): Promise<void> => {
+export const checkUrl = async (request: URLRequest): Promise<void> => {
     try {
         console.time(request.url);
         const response = await axios.get(request.url, request.config);
         const body = await response.data;
         if (response.status === 200) {
-            const compareResult = request.compare(body)
+            const compareResult = request.compareRequest(body)
             if (compareResult === true) {
                 console.log(request.url, "OK");
             } else {
                 console.log(request.url, "NOT OK")
             }
-            
+
         }
         console.timeEnd(request.url);
     } catch (e: any) {
